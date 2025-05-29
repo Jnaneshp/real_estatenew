@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Dashboard</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+   <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="home.html" class="logo"><i class="fas fa-house"></i>Golden Acres</a>
+         <ul>
+            <li><a href="#">post property<i class="fas fa-paper-plane"></i></a></li>
+         </ul>
+      </section>
+   </nav>
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">buy<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="home.html">Property</a></li>
+                  </ul>
+               </li>
+               <li><a href="#">sell<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="#">post property</a></li>
+                     <li><a href="#">dashboard</a></li>
+                  </ul>
+               </li>
+               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="about.html">about us</a></i></li>
+                     <li><a href="contact.html">contact us</a></i></li>
+                     <li><a href="contact.html#faq">FAQ</a></i></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+         <ul>
+            <li><a href="home.html" class="btn" style="margin-right: 10px;"><i class="fas fa-house"></i> Home</a></li>
+            <li><a href="#">saved <i class="far fa-heart"></i></a></li>
+            <li class="profile-menu">
+               <a href="profile.html">profile <i class="fas fa-user-circle"></i></a>
+            </li>
+         </ul>
+      </section>
+   </nav>
+</header>
+<section class="listings">
+   <h1 class="heading">Admin - All Property Listings</h1>
+   <div class="box-container" id="propertyList"></div>
+</section>
+<footer class="footer">
+   <section class="flex">
+      <div class="box">
+         <a href="tel:8050027829"><i class="fas fa-phone"></i><span>8050027829</span></a>
+         <a href="tel:8050027829"><i class="fas fa-phone"></i><span>8050027829</span></a>
+         <a href="mailto:goldenacres@gmail.com"><i class="fas fa-envelope"></i><span>goldenacres@gmail.com</span></a>
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>Udupi, Karnataka, india - 576104</span></a>
+      </div>
+      <div class="box">
+         <a href="home.html"><span>home</span></a>
+         <a href="about.html"><span>about</span></a>
+         <a href="contact.html"><span>contact</span></a>
+         <a href="listings.html"><span>all listings</span></a>
+         <a href="#"><span>saved properties</span></a>
+      </div>
+      <div class="box">
+         <a href="#"><span>facebook</span><i class="fab fa-facebook-f"></i></a>
+         <a href="#"><span>twitter</span><i class="fab fa-twitter"></i></a>
+         <a href="#"><span>linkedin</span><i class="fab fa-linkedin"></i></a>
+         <a href="#"><span>instagram</span><i class="fab fa-instagram"></i></a>
+      </div>
+   </section>
+   <div class="credit">&copy; copyright @ 2025 by <span>Akash, Prajwal, Sumanth</span> | all rights reserved!</div>
+</footer>
+<script src="js/script.js"></script>
+<script>
+fetch('/real-estate/backend/get_all_properties.php')
+  .then(res => res.json())
+  .then(properties => {
+    const container = document.getElementById('propertyList');
+    if (!Array.isArray(properties) || properties.length === 0) {
+      container.innerHTML = '<p style="text-align:center; color:#888; font-size:1.2rem;">No properties found.</p>';
+      return;
+    }
+    properties.forEach(property => {
+      const box = document.createElement('div');
+      box.className = 'box';
+      box.innerHTML = `
+         <div class="admin">
+            <h3>${property.owner_initial || 'U'}</h3>
+            <div>
+               <p>${property.owner_name || 'Unknown'}</p>
+               <span>${property.created_at ? property.created_at.split('T')[0] : ''}</span>
+            </div>
+         </div>
+         <div class="thumb">
+            <p class="total-images"><i class="far fa-image"></i><span>${property.images.length}</span></p>
+            <p class="type"><span>${property.property_type}</span><span>sale</span></p>
+            <img src="/real-estate/${property.images[0] || 'images/house-img-1.webp'}" alt="Property Image">
+         </div>
+         <h3 class="name">${property.title}</h3>
+         <p class="location"><i class="fas fa-map-marker-alt"></i><span>${property.city}, ${property.address}</span></p>
+         <div class="flex">
+            <p><i class="fas fa-bed"></i><span>${property.bedrooms}</span></p>
+            <p><i class="fas fa-bath"></i><span>${property.bathrooms}</span></p>
+            <p><i class="fas fa-maximize"></i><span>${property.square_feet}sqft</span></p>
+         </div>
+         <a href="view_property.html?id=${property.id}" class="btn">View Property</a>
+         <button class="btn delete-btn" data-id="${property.id}" style="background:#e74c3c;margin-top:10px;">Delete</button>
+      `;
+      container.appendChild(box);
+    });
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const propertyId = this.getAttribute('data-id');
+        if (confirm('Are you sure you want to delete this property?')) {
+          fetch('/real-estate/backend/delete_property.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: propertyId })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              this.closest('.box').remove();
+            } else {
+              alert('Failed to delete property.');
+            }
+          });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html> 

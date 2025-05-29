@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Property - Golden Acres</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <style>
+    .property-form-container {
+      max-width: 600px;
+      margin: 60px auto 0 auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 40px 40px 30px 40px;
+    }
+    .property-form-container h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 28px;
+      color: #2c3e50;
+    }
+    .property-form label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      font-size: 1.1rem;
+    }
+    .property-form input,
+    .property-form textarea,
+    .property-form select {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 18px;
+      background: #f8f8f8;
+    }
+    .property-form input[type="file"] {
+      padding: 6px;
+      font-size: 1.1rem;
+    }
+    .property-form .btn {
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.2rem;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    @media (max-width: 600px) {
+      .property-form-container {
+        padding: 18px 6vw 18px 6vw;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- header section starts  -->
+<header class="header">
+   <nav class="navbar nav-1">
+      <section class="flex">
+         <a href="home.html" class="logo"><i class="fas fa-house"></i>Golden Acres</a>
+         <ul>
+            <li><a href="#">post property<i class="fas fa-paper-plane"></i></a></li>
+         </ul>
+      </section>
+   </nav>
+   <nav class="navbar nav-2">
+      <section class="flex">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">buy<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="home.html">Property</a></li>
+                  </ul>
+               </li>
+               <li><a href="#">sell<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="#">post property</a></li>
+                     <li><a href="#">dashboard</a></li>
+                  </ul>
+               </li>
+               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
+                  <ul>
+                     <li><a href="about.html">about us</a></i></li>
+                     <li><a href="contact.html">contact us</a></i></li>
+                     <li><a href="contact.html#faq">FAQ</a></i></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+         <ul>
+            <li><a href="home.html" class="btn" style="margin-right: 10px;"><i class="fas fa-house"></i> Home</a></li>
+            <li><a href="#">saved <i class="far fa-heart"></i></a></li>
+            <li class="profile-menu">
+               <a href="profile.html">profile <i class="fas fa-user-circle"></i></a>
+            </li>
+         </ul>
+      </section>
+   </nav>
+</header>
+<!-- header section ends -->
+
+<div class="property-form-container">
+  <h2>Post a Property</h2>
+  <form class="property-form" action="/real-estate/backend/post_property.php" method="post" enctype="multipart/form-data">
+    <label>Title</label>
+    <input type="text" name="title" required>
+    <label>Description</label>
+    <textarea name="description" rows="3" required></textarea>
+    <label>Price (INR)</label>
+    <input type="text" name="price" required>
+    <label>Bedrooms</label>
+    <input type="text" name="bedrooms" required>
+    <label>Bathrooms</label>
+    <input type="text" name="bathrooms" required>
+    <label>Square Feet</label>
+    <input type="text" name="square_feet" required>
+    <label>Property Type</label>
+    <select name="property_type" required>
+      <option value="flat">Flat</option>
+      <option value="house">House</option>
+      <option value="shop">Shop</option>
+    </select>
+    <label>Location (City)</label>
+    <input type="text" name="city" required>
+    <label>Address</label>
+    <input type="text" name="address" required>
+    <label>Images</label>
+    <input type="file" name="images[]" accept="image/*" multiple required>
+    <button type="submit" class="btn">Post Property</button>
+  </form>
+</div>
+
+<!-- footer section starts  -->
+<footer class="footer">
+   <section class="flex">
+      <div class="box">
+         <a href="tel:8050027829"><i class="fas fa-phone"></i><span>8050027829</span></a>
+         <a href="tel:8050027829"><i class="fas fa-phone"></i><span>8050027829</span></a>
+         <a href="mailto:goldenacres@gmail.com"><i class="fas fa-envelope"></i><span>goldenacres@gmail.com</span></a>
+         <a href="#"><i class="fas fa-map-marker-alt"></i><span>Udupi, Karnataka, india - 576104</span></a>
+      </div>
+      <div class="box">
+         <a href="home.html"><span>home</span></a>
+         <a href="about.html"><span>about</span></a>
+         <a href="contact.html"><span>contact</span></a>
+         <a href="listings.html"><span>all listings</span></a>
+         <a href="#"><span>saved properties</span></a>
+      </div>
+      <div class="box">
+         <a href="#"><span>facebook</span><i class="fab fa-facebook-f"></i></a>
+         <a href="#"><span>twitter</span><i class="fab fa-twitter"></i></a>
+         <a href="#"><span>linkedin</span><i class="fab fa-linkedin"></i></a>
+         <a href="#"><span>instagram</span><i class="fab fa-instagram"></i></a>
+      </div>
+   </section>
+   <div class="credit">&copy; copyright @ 2025 by <span>Akash, Prajwal, Sumanth</span> | all rights reserved!</div>
+</footer>
+<!-- footer section ends -->
+<script src="js/script.js"></script>
+</body>
+</html> 
